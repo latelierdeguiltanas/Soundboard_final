@@ -179,9 +179,11 @@
             justify-content: center;
             align-items: center;
             margin-top: 2px;
+            column-gap: 6px;
         }
 
-        .resources-backdrop {
+        .resources-backdrop,
+        .help-backdrop {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.35);
@@ -191,7 +193,8 @@
             z-index: 999;
         }
 
-        .resources-panel {
+        .resources-panel,
+        .help-panel {
             margin: 70px 12px 0 0;
             width: 310px;
             max-width: 90vw;
@@ -204,7 +207,8 @@
             color: var(--color-text);
         }
 
-        .resources-panel-header {
+        .resources-panel-header,
+        .help-panel-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -212,14 +216,16 @@
             margin-bottom: 6px;
         }
 
-        .resources-title {
+        .resources-title,
+        .help-title {
             font-size: 12px;
             letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--color-gold);
         }
 
-        .resources-close {
+        .resources-close,
+        .help-close {
             border: none;
             background: transparent;
             color: var(--color-muted);
@@ -228,22 +234,26 @@
             padding: 0 2px;
         }
 
-        .resources-close:hover {
+        .resources-close:hover,
+        .help-close:hover {
             color: var(--color-gold);
         }
 
-        .resources-section {
+        .resources-section,
+        .help-section {
             margin-top: 6px;
             padding-top: 4px;
             border-top: 1px solid rgba(216, 200, 143, 0.25);
         }
 
-        .resources-section:first-of-type {
+        .resources-section:first-of-type,
+        .help-section:first-of-type {
             border-top: none;
             padding-top: 0;
         }
 
-        .resources-section-title {
+        .resources-section-title,
+        .help-section-title {
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -280,6 +290,17 @@
         .resources-link:hover {
             border-color: rgba(239, 233, 204, 0.9);
             box-shadow: 0 0 10px rgba(216, 200, 143, 0.5);
+        }
+
+        .help-text-block {
+            font-size: 10px;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .help-text-block strong {
+            color: var(--color-gold);
+            font-weight: 600;
         }
 
 
@@ -1458,6 +1479,9 @@
             </div>
             <div class="topbar-row-resources">
                 <button id="btn-resources" class="btn-icon" title="Ressources audio libres de droit">♫</button>
+                <button id="btn-help-jeu" class="btn-icon" title="Aide mode Jeu" data-help-target="jeu">🎲</button>
+                <button id="btn-help-scenes" class="btn-icon" title="Aide onglet Scènes" data-help-target="scenes">🎭</button>
+                <button id="btn-help-meteo" class="btn-icon" title="Aide onglet Météo" data-help-target="meteo">☁</button>
             </div>
         </div>
     </header>
@@ -1503,6 +1527,18 @@
                     <span class="resources-link-main">Ambient Mixer</span>
                     <span class="resources-link-sub">Crée tes propres ambiances</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-backdrop" class="help-backdrop" aria-hidden="true">
+        <div class="help-panel" role="dialog" aria-labelledby="help-title">
+            <div class="help-panel-header">
+                <span id="help-title" class="help-title">Mode d'emploi</span>
+                <button id="help-close" class="help-close" aria-label="Fermer">×</button>
+            </div>
+            <div id="help-content" class="help-content">
+                <!-- Contenu d'aide injecté par JavaScript -->
             </div>
         </div>
     </div>
@@ -3830,6 +3866,85 @@ function stopAllAudio() {
             }
         });
     });
+
+
+
+    // === AIDE CONTEXTUELLE PAR ONGLET ===
+    const helpBackdrop = document.getElementById('help-backdrop');
+    const helpClose = document.getElementById('help-close');
+    const helpContent = document.getElementById('help-content');
+    const helpTitle = document.getElementById('help-title');
+    const helpButtons = document.querySelectorAll('[data-help-target]');
+
+    const helpTexts = {
+        jeu: {
+            title: "Mode d'emploi – Jeu",
+            html: [
+                "<div class='help-text-block'><strong>Principe :</strong> Utilise ce mode pendant la partie pour lancer rapidement des musiques, ambiances et bruitages.</div>",
+                "<div class='help-text-block'><strong>Cartes sons :</strong> chaque carte représente un son. Tu peux le lancer, l'arrêter, régler son volume, et l'épingler si tu l'utilises souvent.</div>",
+                "<div class='help-text-block'><strong>Épinglés :</strong> la catégorie 'Épinglés' regroupe tes sons favoris pour les retrouver en un clic.</div>",
+                "<div class='help-text-block'><strong>Silence :</strong> le bouton 'Silence' coupe tous les sons en cours (pratique en fin de scène ou en cas de débordement sonore).</div>"
+            ].join("")
+        },
+        scenes: {
+            title: "Mode d'emploi – Scènes",
+            html: [
+                "<div class='help-text-block'><strong>Principe :</strong> l'onglet Scènes te permet de préparer des combinaisons de sons prêtes à être lancées.</div>",
+                "<div class='help-text-block'><strong>Scènes préconfigurées :</strong> choisis une scène (taverne, ville, combat, exploration, etc.) pour lancer plusieurs sons cohérents en même temps.</div>",
+                "<div class='help-text-block'><strong>Ajustements :</strong> tu peux toujours ajuster les volumes ou couper certains sons sans quitter la scène.</div>",
+                "<div class='help-text-block'><strong>Fluidité :</strong> pense aux scènes comme à des raccourcis narratifs pour changer rapidement d'ambiance.</div>"
+            ].join("")
+        },
+        meteo: {
+            title: "Mode d'emploi – Météo",
+            html: [
+                "<div class='help-text-block'><strong>Principe :</strong> l'onglet Météo sert à ajouter une couche d'ambiance climatique par-dessus le reste.</div>",
+                "<div class='help-text-block'><strong>Effets météo :</strong> pluie, vent, orage, tempête... choisis le climat qui correspond à ta scène.</div>",
+                "<div class='help-text-block'><strong>Cumul :</strong> la météo ne remplace pas les autres sons, elle se superpose pour enrichir l'ambiance.</div>",
+                "<div class='help-text-block'><strong>Astuce :</strong> une simple pluie légère peut suffire à changer complètement la perception d'une scène banale.</div>"
+            ].join("")
+        }
+    };
+
+    function openHelpPanel(targetKey) {
+        if (!helpBackdrop || !helpContent || !helpTitle) return;
+        const cfg = helpTexts[targetKey];
+        if (!cfg) return;
+        helpTitle.textContent = cfg.title;
+        helpContent.innerHTML = cfg.html;
+        helpBackdrop.style.display = 'flex';
+        helpBackdrop.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHelpPanel() {
+        if (!helpBackdrop) return;
+        helpBackdrop.style.display = 'none';
+        helpBackdrop.setAttribute('aria-hidden', 'true');
+    }
+
+    helpButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const key = btn.getAttribute('data-help-target');
+            openHelpPanel(key);
+        });
+    });
+
+    if (helpClose) {
+        helpClose.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeHelpPanel();
+        });
+    }
+
+    if (helpBackdrop) {
+        helpBackdrop.addEventListener('click', function (e) {
+            if (e.target === helpBackdrop) {
+                closeHelpPanel();
+            }
+        });
+    }
+
 
 </script>
 
