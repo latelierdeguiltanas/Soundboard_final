@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QR76E14EGG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QR76E14EGG');
+    </script>
+
     <meta charset="UTF-8">
     <title>Soundboard – Maquette UI + moteur audio (scènes + séquences)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -439,11 +448,27 @@
             transform: translateY(-1px);
         }
 
+        
         .sound-name {
-            font-size: 9.5px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
             color: var(--color-text);
-            line-height: 1.15;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .app.mode-edit .sound-name {
+            cursor: pointer;
+            color: var(--color-gold);
+            text-shadow: 0 0 8px rgba(216, 200, 143, 0.85);
+            border-bottom: 1px dotted rgba(216, 200, 143, 0.7);
+        }
+
+        .app.mode-edit .sound-name:hover {
+            color: var(--color-gold);
+            text-shadow: 0 0 10px rgba(216, 200, 143, 0.8);
         }
 
         .sound-controls-row {
@@ -618,22 +643,107 @@
             margin-top: 4px;
         }
 
+        
         .mj-footer {
+            margin-top: 10px;
             display: flex;
             justify-content: center;
-            margin-top: 6px;
+        }
+        .mj-config-section {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(216, 200, 143, 0.6);
+            background: radial-gradient(circle at top, rgba(216, 200, 143, 0.08), rgba(10, 8, 5, 0.95));
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
         }
 
-        .mj-close-btn {
+        .mj-config-section .mj-section-title {
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .mj-config-section .mj-config-row {
+            margin-bottom: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mj-btn-full {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .mj-config-status {
             font-size: 11px;
-            padding: 4px 12px;
+            color: var(--color-gold);
+            margin-top: 4px;
+        }
+
+        .mj-config-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .mj-config-header .mj-section-title {
+            margin: 0;
+        }
+
+        .mj-help-btn {
             border-radius: 999px;
             border: 1px solid rgba(216, 200, 143, 0.7);
-            background: linear-gradient(145deg, #282019, #1a130f);
-            color: var(--color-text);
+            background: radial-gradient(circle at 30% 0, rgba(216, 200, 143, 0.55), rgba(10, 8, 5, 0.95));
+            color: var(--color-dark);
+            width: 22px;
+            height: 22px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        /* SECTION D’ÉDITION PANEL MJ */
+        .mj-help-btn:hover {
+            box-shadow: 0 0 8px rgba(216, 200, 143, 0.6);
+        }
+
+        .mj-help-btn:active {
+            transform: scale(0.95);
+        }
+
+
+        .mj-close-btn {
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(216, 200, 143, 0.9);
+            background: linear-gradient(160deg, rgba(216, 200, 143, 0.25), rgba(10, 8, 5, 0.95));
+            color: var(--color-gold);
+            cursor: pointer;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+        }
+
+        .mj-close-btn:hover {
+            background: linear-gradient(160deg, rgba(216, 200, 143, 0.35), rgba(10, 8, 5, 0.95));
+            box-shadow: 0 0 10px rgba(216, 200, 143, 0.4);
+        }
+
+        .mj-close-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 0 4px rgba(216, 200, 143, 0.3);
+        }
+
+/* SECTION D’ÉDITION PANEL MJ */
 
         .mj-edit-section {
             margin-top: 4px;
@@ -1275,6 +1385,7 @@
             justify-content: flex-end;
             gap: 8px;
         }
+
         .beta-btn {
             border-radius: 999px;
             border: 1px solid rgba(216,200,143,0.7);
@@ -1398,17 +1509,20 @@
             <div class="beta-modal-title" id="beta-modal-title">
                 Soundboard Guiltanas – Bêta
             </div>
+            
             <div class="beta-modal-body">
-                <p><strong>Bienvenue dans la version de test de la Soundboard Guiltanas.</strong></p>
-                <p>Cette version est mise gratuitement à disposition pendant une période limitée afin de la tester en conditions réelles.</p>
-                <p>Merci de prendre quelques minutes, après vos parties, pour nous envoyer vos retours, idées et problèmes rencontrés via le bouton « Feedback ».</p>
+                <p><strong>Bienvenue dans la Soundboard Guiltanas.</strong></p>
+                <p>Important : par défaut, aucun son n’est fourni. C’est normal. La soundboard est un lecteur vide que tu remplis avec tes propres fichiers audio.</p>
+                <p>Pour commencer, ouvre le mode d’édition, importe tes sons dans les emplacements qui t’intéressent, puis pense à exporter ta configuration (JSON) pour garder une sauvegarde.</p>
+                <p>Cette version est proposée gratuitement pendant une période de test. Merci de prendre quelques minutes, après vos parties, pour envoyer vos retours, idées et problèmes via le bouton « Feedback ».</p>
             </div>
+
             <div class="beta-modal-actions">
                 <button type="button" class="beta-btn" id="beta-hide-forever">Ne plus afficher</button>
                 <button type="button" class="beta-btn beta-btn-primary" id="beta-close">OK</button>
             </div>
         </div>
-    </div>
+        </div>
 
     <div class="feedback-fab">
         <button type="button" class="feedback-fab-button" id="feedback-open">
@@ -2137,7 +2251,64 @@
                     </button>
                 </div>
 
-                <div class="mj-footer">
+                
+                
+<!-- CONFIGURATION ET PERSISTANCE – OPTIONS 1 & 2 -->
+                <div class="mj-section mj-config-section">
+                    <div class="mj-config-header">
+                        <div class="mj-section-title">Configuration et persistance</div>
+                        <button type="button" class="mj-help-btn" data-help-target="config" aria-label="Aide sur la sauvegarde">?</button>
+                    </div>
+
+                    <div class="mj-config-row">
+                        <button id="btn-export-config" class="mj-btn mj-btn-full">
+                            Exporter la configuration (JSON)
+                        </button>
+                    </div>
+
+                    <div class="mj-config-row">
+                        <button id="btn-import-config" class="mj-btn mj-btn-full">
+                            Importer une configuration (JSON)
+                        </button>
+                        <input type="file" id="input-import-config" accept="application/json" style="display:none;">
+                    </div>
+
+                    <div class="mj-config-row">
+                        <button id="btn-reassoc-sounds" class="mj-btn mj-btn-full">
+                            Réassocier les sons (dossier ou fichiers)
+                        </button>
+                        <input type="file" id="input-reassoc-sounds" multiple webkitdirectory style="display:none;">
+                    </div>
+
+                    <p id="config-status" class="mj-config-status">
+                        Aucune configuration importée ou exportée pour le moment.
+                    </p>
+                </div>
+
+                <div class="mj-section mj-config-section" id="fs-section" style="display:none;">
+                    <div class="mj-config-header">
+                        <div class="mj-section-title">Dossier persistant (Option 2 – navigateurs compatibles)</div>
+                        <button type="button" class="mj-help-btn" data-help-target="fs" aria-label="Aide sur le dossier persistant">?</button>
+                    </div>
+
+                    <div class="mj-config-row">
+                        <button id="btn-choose-sound-dir" class="mj-btn mj-btn-full">
+                            Choisir et mémoriser un dossier de sons
+                        </button>
+                    </div>
+
+                    <div class="mj-config-row">
+                        <button id="btn-reload-sound-dir" class="mj-btn mj-btn-full">
+                            Recharger les sons depuis le dossier mémorisé
+                        </button>
+                    </div>
+
+                    <p id="fs-status" class="mj-config-status">
+                        Cette option est disponible uniquement sur certains navigateurs (Chrome, Edge, Android).
+                    </p>
+                </div>
+
+<div class="mj-footer">
                     <button class="mj-close-btn" id="btn-close-mj">Fermer le Panel MJ</button>
                 </div>
             </div>
@@ -2164,6 +2335,7 @@ let meteoAudio = null;
 let currentWeatherType = null;
 
 
+    
     soundCards.forEach((card, index) => {
         const fileAttr = card.getAttribute('data-sound');
         const soundId = card.getAttribute('data-sound-id') || ('sound_' + index);
@@ -2177,6 +2349,7 @@ let currentWeatherType = null;
         const volSlider = card.querySelector('.sound-volume-range');
         const nameEl = card.querySelector('.sound-name');
         const name = nameEl ? nameEl.textContent.trim() : soundId;
+        const defaultName = name;
 
         const fileInput = card.querySelector('.sound-file-input');
         const importBtn = card.querySelector('.import-btn');
@@ -2192,9 +2365,36 @@ let currentWeatherType = null;
             fileInput,
             importBtn,
             pinBtn,
+            defaultName,
             isPlaying: false
         };
         soundRegistry[soundId] = entry;
+        card.dataset.defaultName = defaultName;
+
+        // Renommage de la carte en mode édition
+        if (nameEl) {
+            nameEl.addEventListener('click', () => {
+                // Renommage uniquement en mode édition
+                if (typeof isEditMode !== 'undefined' && !isEditMode) return;
+
+                const currentName = entry.name || nameEl.textContent.trim() || defaultName;
+                const baseDefault = card.dataset.defaultName || defaultName;
+                const newName = window.prompt(
+                    "Nom visible pour cette carte (laisse vide pour revenir au nom par défaut) :",
+                    currentName
+                );
+                if (newName === null) return;
+
+                const trimmed = newName.trim();
+                if (!trimmed) {
+                    entry.name = baseDefault;
+                    nameEl.textContent = baseDefault;
+                } else {
+                    entry.name = trimmed;
+                    nameEl.textContent = trimmed;
+                }
+            });
+        }
 
         function updateVolume() {
             const local = volSlider ? volSlider.value / 100 : 1;
@@ -2283,6 +2483,7 @@ let currentWeatherType = null;
             });
         }
     });
+
 
     function updateAllVolumes() {
         Object.values(soundRegistry).forEach(({ audio, volSlider }) => {
@@ -3815,7 +4016,413 @@ function stopAllAudio() {
         });
     }
 
-    // === RESSOURCES AUDIO LIBRES ===
+    
+    // === CONFIGURATION & PERSISTANCE (Option 1 – export JSON + réassociation) ===
+
+    const exportConfigBtn = document.getElementById('btn-export-config');
+    const importConfigBtn = document.getElementById('btn-import-config');
+    const importConfigInput = document.getElementById('input-import-config');
+    const reassocBtn = document.getElementById('btn-reassoc-sounds');
+    const reassocInput = document.getElementById('input-reassoc-sounds');
+    const configStatus = document.getElementById('config-status');
+
+    const CONFIG_FILE_VERSION = 1;
+
+    function setConfigStatus(text) {
+        if (configStatus) {
+            configStatus.textContent = text;
+        }
+    }
+
+    function buildExportConfig() {
+        const sounds = Object.entries(soundRegistry).map(([id, entry]) => {
+            const card = entry.card;
+            const fileName = card ? (card.getAttribute('data-sound') || null) : null;
+            const pinned =
+                card && (card.classList.contains('sound-pinned') || card.getAttribute('data-pinned') === 'true');
+            const category = card ? (card.getAttribute('data-category') || card.dataset.category || null) : null;
+
+            return {
+                id,
+                name: entry.name || (entry.nameEl ? entry.nameEl.textContent.trim() : id),
+                category,
+                pinned,
+                fileName
+            };
+        });
+
+        return {
+            type: 'guiltanas_soundboard_config',
+            version: CONFIG_FILE_VERSION,
+            generatedAt: new Date().toISOString(),
+            sounds,
+            scenes: sceneData,
+            sequences: {
+                sceneConfig: sequenceSceneConfig,
+                labelConfig: sequenceLabelConfig
+            },
+            weather: {
+                types: weatherTypes,
+                presets: weatherPresetsConfig,
+                intensity: currentWeatherIntensity
+            }
+        };
+    }
+
+    function downloadConfigJson() {
+        const data = buildExportConfig();
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'soundboard_config.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function rebuildSceneListFromData() {
+        if (!sceneListContainer) return;
+        sceneListContainer.innerHTML = '';
+
+        const names = Object.keys(sceneData);
+        if (!names.length) return;
+
+        names.forEach((name, index) => {
+            const row = document.createElement('div');
+            row.className = 'scene-row';
+            row.setAttribute('data-scene', name);
+
+            row.innerHTML = `
+                <button class="scene-pill${index === 0 ? ' active' : ''}">\${name}</button>
+                <button class="scene-mini-btn scene-launch-btn">Lancer</button>
+                <button class="scene-mini-btn scene-stop-btn">Stop</button>
+                <button class="scene-mini-btn scene-edit-btn">⋯ Éditer</button>
+            `;
+
+            sceneListContainer.appendChild(row);
+            attachSceneRowBehavior(row);
+        });
+
+        const first = names[0];
+        if (first) {
+            currentSceneName = first;
+            setActiveSceneRow(first);
+        }
+        refreshSceneEditPanel();
+        initMjEditFields();
+    }
+
+    function applyImportedConfig(data) {
+        if (!data || typeof data !== 'object') {
+            throw new Error('Fichier de configuration invalide.');
+        }
+
+        if (data.type && data.type !== 'guiltanas_soundboard_config') {
+            console.warn('Type de fichier inattendu, import quand même.');
+        }
+
+        // Sons
+        if (Array.isArray(data.sounds)) {
+            data.sounds.forEach(cfg => {
+                const entry = soundRegistry[cfg.id];
+                if (!entry) return;
+                const card = entry.card;
+                const nameEl = entry.nameEl;
+
+                if (cfg.name && nameEl) {
+                    nameEl.textContent = cfg.name;
+                    entry.name = cfg.name;
+                }
+                if (card && cfg.fileName) {
+                    card.setAttribute('data-sound', cfg.fileName);
+                }
+            });
+        }
+
+        // Scènes
+        if (data.scenes && typeof data.scenes === 'object') {
+            sceneData = data.scenes;
+
+            if (typeof sceneLastPlay === 'object') {
+                Object.keys(sceneLastPlay).forEach(k => delete sceneLastPlay[k]);
+                Object.keys(sceneData).forEach(name => {
+                    sceneLastPlay[name] = [];
+                });
+            }
+
+            rebuildSceneListFromData();
+        }
+
+        // Séquences
+        if (data.sequences && data.sequences.sceneConfig) {
+            Object.assign(sequenceSceneConfig, data.sequences.sceneConfig);
+        }
+        if (data.sequences && data.sequences.labelConfig) {
+            Object.assign(sequenceLabelConfig, data.sequences.labelConfig);
+        }
+        if (typeof syncSequenceButtonLabels === 'function') {
+            syncSequenceButtonLabels();
+        }
+
+        // Météo
+        if (data.weather) {
+            if (Array.isArray(data.weather.types)) {
+                weatherTypes = data.weather.types;
+            }
+            if (Array.isArray(data.weather.presets)) {
+                weatherPresetsConfig = data.weather.presets;
+            }
+            if (typeof data.weather.intensity === 'string') {
+                currentWeatherIntensity = data.weather.intensity;
+            }
+            if (typeof buildWeatherEditUI === 'function') buildWeatherEditUI();
+            if (typeof updateWeatherCenter === 'function') updateWeatherCenter(null);
+            if (typeof updateWeatherIntensityUI === 'function') updateWeatherIntensityUI();
+        }
+
+        setConfigStatus("Configuration importée. Pense à réassocier les sons si nécessaire.");
+    }
+
+    if (exportConfigBtn) {
+        exportConfigBtn.addEventListener('click', function () {
+            try {
+                downloadConfigJson();
+                setConfigStatus("Configuration exportée (fichier JSON téléchargé).");
+            } catch (e) {
+                console.error(e);
+                setConfigStatus("Erreur lors de l'export de la configuration.");
+            }
+        });
+    }
+
+    if (importConfigBtn && importConfigInput) {
+        importConfigBtn.addEventListener('click', function () {
+            importConfigInput.value = "";
+            importConfigInput.click();
+        });
+
+        importConfigInput.addEventListener('change', function () {
+            const file = importConfigInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    applyImportedConfig(data);
+                } catch (err) {
+                    console.error(err);
+                    setConfigStatus("Erreur lors de la lecture du fichier JSON.");
+                }
+            };
+            reader.readAsText(file, 'utf-8');
+        });
+    }
+
+    if (reassocBtn && reassocInput) {
+        reassocBtn.addEventListener('click', function () {
+            reassocInput.value = "";
+            reassocInput.click();
+        });
+
+        reassocInput.addEventListener('change', function () {
+            const files = Array.from(reassocInput.files || []);
+            if (!files.length) {
+                setConfigStatus("Aucun fichier sélectionné pour la réassociation.");
+                return;
+            }
+
+            const byName = {};
+            files.forEach(f => {
+                byName[f.name] = f;
+            });
+
+            let found = 0;
+            Object.entries(soundRegistry).forEach(([id, entry]) => {
+                const card = entry.card;
+                if (!card) return;
+                const wanted = card.getAttribute('data-sound');
+                if (!wanted) return;
+                const baseName = wanted.split(/[\\/]/).pop();
+                const f = byName[baseName];
+                if (!f) return;
+
+                const url = URL.createObjectURL(f);
+                entry.audio.src = url;
+                entry.audio.load();
+                found++;
+            });
+
+            if (found === 0) {
+                setConfigStatus("Aucun son correspondant trouvé dans les fichiers sélectionnés.");
+            } else {
+                setConfigStatus(found + " sons réassociés. Si tu modifies ta bibliothèque, pense à exporter une nouvelle configuration.");
+            }
+        });
+    }
+
+    // === DOSSIER PERSISTANT (Option 2 – File System Access API) ===
+
+    const fsSection = document.getElementById('fs-section');
+    const chooseSoundDirBtn = document.getElementById('btn-choose-sound-dir');
+    const reloadSoundDirBtn = document.getElementById('btn-reload-sound-dir');
+    const fsStatus = document.getElementById('fs-status');
+
+    const supportsFSAccess = typeof window.showDirectoryPicker === 'function' && !!window.indexedDB;
+
+    function setFSStatus(text) {
+        if (fsStatus) {
+            fsStatus.textContent = text;
+        }
+    }
+
+    if (!supportsFSAccess) {
+        if (fsSection) {
+            fsSection.style.display = 'none';
+        }
+    } else {
+        if (fsSection) {
+            fsSection.style.display = '';
+        }
+        initPersistentSoundDirectory();
+    }
+
+    function openSettingsDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open('guiltanasSoundboard', 1);
+            request.onupgradeneeded = function (event) {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains('settings')) {
+                    db.createObjectStore('settings');
+                }
+            };
+            request.onsuccess = function (event) {
+                resolve(event.target.result);
+            };
+            request.onerror = function (event) {
+                reject(event.target.error);
+            };
+        });
+    }
+
+    async function saveSoundDirHandle(handle) {
+        const db = await openSettingsDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction('settings', 'readwrite');
+            const store = tx.objectStore('settings');
+            const req = store.put(handle, 'soundDirHandle');
+            req.onsuccess = function () { resolve(); };
+            req.onerror = function (event) { reject(event.target.error); };
+        });
+    }
+
+    async function loadSoundDirHandle() {
+        const db = await openSettingsDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction('settings', 'readonly');
+            const store = tx.objectStore('settings');
+            const req = store.get('soundDirHandle');
+            req.onsuccess = function (event) {
+                resolve(event.target.result || null);
+            };
+            req.onerror = function (event) {
+                reject(event.target.error);
+            };
+        });
+    }
+
+    async function initPersistentSoundDirectory() {
+        try {
+            const handle = await loadSoundDirHandle();
+            if (!handle) {
+                setFSStatus("Aucun dossier de sons n'est encore mémorisé sur cet appareil.");
+                return;
+            }
+            setFSStatus("Dossier de sons mémorisé trouvé. Tentative de réassociation…");
+            await reassociateFromDirectoryHandle(handle);
+        } catch (e) {
+            console.error(e);
+            setFSStatus("Impossible d'utiliser le dossier mémorisé. Utilise la réassociation classique.");
+        }
+    }
+
+    async function reassociateFromDirectoryHandle(dirHandle) {
+        const filesByName = {};
+
+        try {
+            for await (const [name, handle] of dirHandle.entries()) {
+                if (handle.kind === 'file') {
+                    const file = await handle.getFile();
+                    filesByName[file.name] = file;
+                }
+            }
+        } catch (e) {
+            console.error(e);
+            setFSStatus("Erreur lors de la lecture du dossier de sons. Utilise la réassociation classique.");
+            return;
+        }
+
+        let found = 0;
+        Object.entries(soundRegistry).forEach(([id, entry]) => {
+            const card = entry.card;
+            if (!card) return;
+            const wanted = card.getAttribute('data-sound');
+            if (!wanted) return;
+            const baseName = wanted.split(/[\\/]/).pop();
+            const f = filesByName[baseName];
+            if (!f) return;
+
+            const url = URL.createObjectURL(f);
+            entry.audio.src = url;
+            entry.audio.load();
+            found++;
+        });
+
+        if (found === 0) {
+            setFSStatus("Aucun son correspondant trouvé dans le dossier mémorisé. Vérifie les noms de fichiers.");
+        } else {
+            setFSStatus(found + " sons réassociés automatiquement depuis le dossier mémorisé.");
+        }
+    }
+
+    if (chooseSoundDirBtn && supportsFSAccess) {
+        chooseSoundDirBtn.addEventListener('click', async function () {
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                await saveSoundDirHandle(dirHandle);
+                setFSStatus("Dossier de sons mémorisé pour cet appareil. Réassociation en cours…");
+                await reassociateFromDirectoryHandle(dirHandle);
+            } catch (e) {
+                if (e && e.name === 'AbortError') {
+                    setFSStatus("Sélection de dossier annulée.");
+                } else {
+                    console.error(e);
+                    setFSStatus("Erreur lors de la sélection du dossier de sons.");
+                }
+            }
+        });
+    }
+
+    if (reloadSoundDirBtn && supportsFSAccess) {
+        reloadSoundDirBtn.addEventListener('click', async function () {
+            try {
+                const handle = await loadSoundDirHandle();
+                if (!handle) {
+                    setFSStatus("Aucun dossier mémorisé. Choisis un dossier de sons d'abord.");
+                    return;
+                }
+                setFSStatus("Réassociation des sons depuis le dossier mémorisé…");
+                await reassociateFromDirectoryHandle(handle);
+            } catch (e) {
+                console.error(e);
+                setFSStatus("Impossible de réassocier depuis le dossier mémorisé.");
+            }
+        });
+    }
+
+// === RESSOURCES AUDIO LIBRES ===
     const resourcesBtn = document.getElementById('btn-resources');
     const resourcesBackdrop = document.getElementById('resources-backdrop');
     const resourcesClose = document.getElementById('resources-close');
@@ -3904,6 +4511,26 @@ function stopAllAudio() {
                 "<div class='help-text-block'><strong>Astuce :</strong> une simple pluie légère peut suffire à changer complètement la perception d'une scène banale.</div>"
             ].join("")
         }
+        ,
+        config: {
+            title: "Option 1 – Sauvegarde",
+            html: [
+                "<div class='help-text-block'><strong>Principe :</strong> garde une copie complète de ta soundboard (noms de sons, scènes, météo, séquences) dans un fichier JSON.</div>",
+                "<div class='help-text-block'><strong>Créer une sauvegarde :</strong> configure tout, puis clique sur « Exporter la configuration (JSON) » et conserve le fichier soundboard_config.json.</div>",
+                "<div class='help-text-block'><strong>Recharger :</strong> clique sur « Importer une configuration (JSON) », puis sur « Réassocier les sons » et sélectionne le dossier où se trouvent tes fichiers audio.</div>",
+                "<div class='help-text-block'><strong>À retenir :</strong> les sons ne sont pas dans le JSON : seuls leurs noms le sont. Si tu renommes tes fichiers, il faudra les recoller à la main.</div>"
+            ].join("")
+        },
+        fs: {
+            title: "Option 2 – Dossier persistant",
+            html: [
+                "<div class='help-text-block'><strong>Principe :</strong> sur Chrome / Edge, le navigateur peut mémoriser un dossier de sons sur cet appareil pour recoller automatiquement les fichiers.</div>",
+                "<div class='help-text-block'><strong>Première utilisation :</strong> range tes sons dans un dossier dédié, clique sur « Choisir et mémoriser un dossier de sons » et sélectionne ce dossier.</div>",
+                "<div class='help-text-block'><strong>Réutiliser :</strong> à la séance suivante, clique sur « Recharger les sons depuis le dossier mémorisé » pour relier à nouveau les sons.</div>",
+                "<div class='help-text-block'><strong>Si ça casse :</strong> si le navigateur perd l'autorisation ou si le dossier a changé, repasse par l'option 1 (import JSON + réassociation des sons).</div>"
+            ].join("")
+        }
+
     };
 
     function openHelpPanel(targetKey) {
@@ -3951,7 +4578,7 @@ function stopAllAudio() {
 <script>
 // === POPUP BÊTA & FEEDBACK ===
 (function () {
-    const BETA_STORAGE_KEY = 'guiltanas_soundboard_beta_hidden';
+    const BETA_STORAGE_KEY = 'guiltanas_soundboard_welcome_v3';
     const betaBackdrop = document.getElementById('beta-backdrop');
     const betaCloseBtn = document.getElementById('beta-close');
     const betaHideForeverBtn = document.getElementById('beta-hide-forever');
